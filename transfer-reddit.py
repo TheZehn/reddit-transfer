@@ -1,19 +1,22 @@
 # Copies Reddit account subscriptions and r/all filters to a new account.  
 # Launch and browser to http://localhost:8080
 
-# You'll have to create a reddit app by visiting reddit.com/prefs/app
-
-
 # pip install flask praw
 from flask import Flask, render_template, redirect, request
 import praw
 
 app = Flask(__name__)
 
-reddit = praw.Reddit(client_id='XXXXXXXXXXXXXXXXXXXXXX',
-                     client_secret="XXXXXXXXXXXXXXXXXXXXXX",
+# You'll have to create a reddit app by visiting reddit.com/prefs/app
+REDDIT_CLIENT_ID = 'XXXXXXXXXXXXXXXXXXXXXX'
+REDDIT_CLIENT_SECRET = 'XXXXXXXXXXXXXXXXXXXXXX'
+USER_AGENT = "something unique to you"
+
+
+reddit = praw.Reddit(client_id= REDDIT_CLIENT_ID,
+                     client_secret=REDDIT_CLIENT_SECRET,
                      redirect_uri='http://localhost:8080/callback',
-                     user_agent='XXXXXXXXXXXXXXXXXXXXXX')
+                     user_agent=USER_AGENT)
 login_url = reddit.auth.url(['*'], '...', 'permanent')
 
 BASE_FILTERS = []
@@ -39,10 +42,10 @@ def callback():
             BASE_SUBS.append(sub.display_name)
 
         global reddit2
-        reddit2 = praw.Reddit(client_id='XXXXXXXXXXXXXXXXXXXXXX',
-                     client_secret="XXXXXXXXXXXXXXXXXXXXXX",
+        reddit2 = praw.Reddit(client_id= REDDIT_CLIENT_ID,
+                     client_secret=REDDIT_CLIENT_SECRET,
                      redirect_uri='http://localhost:8080/callback',
-                     user_agent='XXXXXXXXXXXXXXXXXXXXXX')
+                     user_agent=USER_AGENT)
                      
         login_url = reddit.auth.url(['*'], '...', 'permanent')
 
