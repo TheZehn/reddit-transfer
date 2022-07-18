@@ -1,3 +1,10 @@
+# Copies Reddit account subscriptions and r/all filters to a new account.  
+# Launch and browser to http://localhost:8080
+
+# You'll have to create a reddit app by visiting reddit.com/prefs/app
+
+
+# pip install flask praw
 from flask import Flask, render_template, redirect, request
 import praw
 
